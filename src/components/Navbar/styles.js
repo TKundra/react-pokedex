@@ -7,6 +7,26 @@ const Container = styled.div`
     justify-content: space-between;
 `;
 
+const SearchBox = styled.div`
+    display: flex;
+    flex: 1;
+`;
+
+const Button = styled.button`
+    width: 80px;
+    height: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 10px;
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    cursor: pointer;
+    &:hover{
+        background-color: #098DAB;
+    }
+`;
+
 const SearchBar = styled.input`
     type: text;
     border-radius: 10px;
@@ -22,5 +42,5 @@ const OptionBox = styled.div`
 `;
 
 export {
-    Container, SearchBar, OptionBox
+    Container, SearchBar, OptionBox, SearchBox, Button
 }
