@@ -6,15 +6,29 @@ import { useEffect } from "react";
 import { fetchPokemons } from './redux/api/pokemon';
 import { useDispatch } from 'react-redux';
 import { fetchPokemonStats } from './redux/api/pokemonStat';
-import { StatContext } from './context/context';
+import { StatContext, TypeContext } from './context/context';
+import axios from 'axios';
 
 function App() {
 
   const [type, setType] = useState(0);
   const [page, setPage] = useState(0);
   const [statsUrl, setStatsUrl] = useState("");
+  const [pokemonType, setPokemonType] = useState([]);
 
   const dispatchPokemon = useDispatch();
+
+  useEffect(async() => {
+    try {
+      await axios.get(
+          `https://pokeapi.co/api/v2/type`,
+      ).then((response) => {
+        setPokemonType(response.data.results);
+      }).catch((error) => console.log('error'));
+    } catch (error) {
+        console.log(error);
+    }
+  }, [])
 
   useEffect(() => {
     dispatchPokemon(fetchPokemons(page));
@@ -26,13 +40,15 @@ function App() {
   }, [statsUrl, statDispatcher])
   
   return (
-    <StatContext.Provider value={setStatsUrl}>
-      <div>
-        <Navbar page={page} type={type} setType={setType}/>
-        <Cards />
-        {type===0 ? <Footer setPage={setPage} /> : null}
-      </div>
-    </StatContext.Provider>
+    <TypeContext.Provider value={pokemonType}>
+      <StatContext.Provider value={setStatsUrl}>
+        <div>
+          <Navbar page={page} type={type} setType={setType}/>
+          <Cards />
+          {type===0 ? <Footer setPage={setPage} /> : null}
+        </div>
+      </StatContext.Provider>
+    </TypeContext.Provider>
   );
 }
 

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Container, SearchBar, OptionBox, SearchBox, Button } from './styles';
 import { FormControl, Select, MenuItem } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { fetchPokemonType } from '../../redux/api/pokemon';
 import { fetchPokemonDetailName } from '../../redux/api/pokemonDetail';
 import { FormHelperText } from '@mui/material';
+import { TypeContext } from '../../context/context';
 
 const Navbar = ({type, setType}) => {
 
@@ -13,6 +14,8 @@ const Navbar = ({type, setType}) => {
   const [name, setName] = useState("");
   const dispatchPokemonType = useDispatch();
   const dispatchPokemonName = useDispatch();
+
+  const pokemonTypes = useContext(TypeContext);
 
   useEffect(() => {
     dispatchPokemonType(fetchPokemonType(type));
@@ -46,10 +49,9 @@ const Navbar = ({type, setType}) => {
               value={type}
               label="Type"
               onChange={(e) => handleType(e.target.value)}>
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={4}>4</MenuItem>
+                {pokemonTypes.filter((type) => type.name!='unknown').map((type, index) => (
+                  <MenuItem key={index} value={type.name}>{type.name}</MenuItem>
+                ))}
             </Select>
             <FormHelperText>Type</FormHelperText>
         </FormControl>

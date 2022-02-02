@@ -1,15 +1,18 @@
 import styled from 'styled-components';
+import { mobile } from '../../responsive';
 
 const Container = styled.div`
     padding: 50px 100px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    ${mobile({flexDirection: "column", padding: "20px", paddingTop: "50px"})};
 `;
 
 const SearchBox = styled.div`
     display: flex;
     flex: 1;
+    ${mobile({paddingBottom: "20px"})};
 `;
 
 const Button = styled.button`

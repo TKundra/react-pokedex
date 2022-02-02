@@ -18,7 +18,7 @@ export const fetchPokemons = (offset=20) => {
     }
 }
 
-export const fetchPokemonType = (type=1) => {
+export const fetchPokemonType = (type='normal') => {
     return async (dispatch) => {
         dispatch(getPokemons());
         try {

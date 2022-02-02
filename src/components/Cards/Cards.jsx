@@ -16,7 +16,7 @@ const Cards = () => {
         )) : 
         error === false && pokemons != null ? pokemons.map((data, index) => (
           <CardComponent key={index} pokemon={data.pokemon!=null ? data.pokemon : data} />
-        )) : null
+        )) : errorDetails === true && error === true ? <span>no data found</span> : null
       }
     </Container>
   );
